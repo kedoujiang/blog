@@ -1,7 +1,6 @@
 package com.jink.jinblog.util;
 
 import com.jink.jinblog.dto.UserDTO;
-import com.jink.jinblog.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

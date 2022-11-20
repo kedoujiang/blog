@@ -43,7 +43,8 @@ public class SwaggerConfig {
         return GroupedOpenApi.builder()
                 .group("all-api")
                 .displayName("All APIs")
-                .pathsToMatch("/user/**", "/apis/**")
+                .packagesToScan("com.jink.jinblog.controller")
+//                .pathsToMatch("/user/**", "/apis/**")
                 .build();
     }
 
