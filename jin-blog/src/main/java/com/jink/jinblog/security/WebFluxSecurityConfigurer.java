@@ -21,6 +21,7 @@ import reactor.core.publisher.Mono;
 @EnableReactiveMethodSecurity
 public class WebFluxSecurityConfigurer {
 
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -44,6 +45,8 @@ public class WebFluxSecurityConfigurer {
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
                 .pathMatchers(HttpMethod.OPTIONS).permitAll()
+                //swagger配置
+                .pathMatchers("/v3/api-docs/**","/swagger-ui.html","/webjars/**","/swagger-ui/**", "/javainuse-openapi/**").permitAll()
                 .pathMatchers("/login").permitAll()
                 .anyExchange().authenticated()
                 .and().build();

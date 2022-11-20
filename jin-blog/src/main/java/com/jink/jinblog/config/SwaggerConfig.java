@@ -3,6 +3,7 @@ package com.jink.jinblog.config;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.GroupedOpenApi;
@@ -23,43 +24,34 @@ public class SwaggerConfig {
     public OpenAPI OpenAPI() {
         return new OpenAPI()
                 .components(new Components()
-                        .addSecuritySchemes("BasicAuth", new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP).scheme("basic"))
-                        .addSecuritySchemes("BearerAuth", new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"))
+//                        .addSecuritySchemes("BasicAuth", new SecurityScheme()
+//                                .type(SecurityScheme.Type.HTTP).scheme("basic"))
+                                .addSecuritySchemes("BearerAuth", new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"))
                 )
                 .addSecurityItem(new SecurityRequirement().addList("BasicAuth").addList("BearerAuth"))
                 .info(new Info()
                         .title("SpringDoc API Test")
                         .description("SpringDoc Simple Application Test")
-                        .version("0.0.1"));
+                        .version("0.0.1")
+                        .license(license()));
     }
 
-    @Bean
-    GroupedOpenApi systemCustomApi() {
-        return GroupedOpenApi.builder()
-                .group("core-custom-api")
-                .displayName("Custom APIs in Core")
-                .pathsToMatch("/apis/*")
-                .build();
-    }
-
-    @Bean
-    GroupedOpenApi customApi() {
-        return GroupedOpenApi.builder()
-                .group("api")
-                .displayName("api.halo.run")
-                .pathsToMatch("/apis/api.halo.run/**")
-                .build();
-    }
 
     @Bean
     GroupedOpenApi allApi() {
         return GroupedOpenApi.builder()
                 .group("all-api")
                 .displayName("All APIs")
-                .pathsToMatch("/api/**", "/apis/**")
+                .pathsToMatch("/user/**", "/apis/**")
                 .build();
     }
 
+
+    private License license() {
+        return new License()
+                .name("MIT")
+                .url("https://opensource.org/licenses/MIT");
+
+    }
 }
