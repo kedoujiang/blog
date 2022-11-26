@@ -2,7 +2,6 @@ package com.jink.jinblog.result;
 
 import lombok.Data;
 import lombok.ToString;
-import reactor.core.publisher.Mono;
 
 import java.io.Serializable;
 
@@ -17,12 +16,6 @@ import java.io.Serializable;
 @ToString
 public class R<T> implements Serializable {
 
-    /** 成功 */
-    public static final int SUCCESS = 200;
-
-    /** 失败 */
-    public static final int FAIL = 500;
-
     private int code;
 
     private String msg;
@@ -31,42 +24,42 @@ public class R<T> implements Serializable {
 
     public static <T> R<T> ok()
     {
-        return restResult(null, SUCCESS, null);
+        return restResult(null, ResponseEnum.SUCCESS.code, ResponseEnum.SUCCESS.message);
     }
 
     public static <T> R<T> ok(T data)
     {
-        return restResult(data, SUCCESS, null);
+        return restResult(data, ResponseEnum.SUCCESS.code, ResponseEnum.SUCCESS.message);
     }
 
     public static <T> R<T> ok(T data, String msg)
     {
-        return restResult(data, SUCCESS, msg);
+        return restResult(data, ResponseEnum.SUCCESS.code, msg);
     }
 
     public static <T> R<T> fail()
     {
-        return restResult(null, FAIL, null);
+        return restResult(null, ResponseEnum.FAIL.code, ResponseEnum.FAIL.message);
     }
 
     public static <T> R<T> fail(String msg)
     {
-        return restResult(null, FAIL, msg);
+        return restResult(null, ResponseEnum.FAIL.code, msg);
     }
 
     public static <T> R<T> fail(T data)
     {
-        return restResult(data, FAIL, null);
+        return restResult(data, ResponseEnum.FAIL.code, ResponseEnum.FAIL.message);
     }
 
     public static <T> R<T> fail(T data, String msg)
     {
-        return restResult(data, FAIL, msg);
+        return restResult(data, ResponseEnum.FAIL.code, msg);
     }
 
     public static <T> R<T> fail(int code, String msg)
     {
-        return restResult(null, code, msg);
+        return restResult(null, ResponseEnum.FAIL.code, ResponseEnum.FAIL.message);
     }
 
     public static <T> R<T> of(ResponseEnum responseEnum){
@@ -118,7 +111,7 @@ public class R<T> implements Serializable {
 
     public static <T> Boolean isSuccess(R<T> ret)
     {
-        return R.SUCCESS == ret.getCode();
+        return ResponseEnum.SUCCESS.code == ret.getCode();
     }
 
 

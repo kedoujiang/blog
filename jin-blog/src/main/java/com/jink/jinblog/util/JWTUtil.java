@@ -1,6 +1,6 @@
 package com.jink.jinblog.util;
 
-import com.jink.jinblog.dto.UserDTO;
+import com.jink.jinblog.dto.UserDetailsDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -51,7 +51,7 @@ public class JWTUtil {
         return expiration.before(new Date());
     }
 
-    public String generateToken(UserDTO user) {
+    public String generateToken(UserDetailsDTO user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRoleList());
         return doGenerateToken(claims, user.getUsername());

@@ -17,4 +17,9 @@ public class CommonConst {
      * 是
      */
     public static final int TRUE = 1;
+
+    /**
+     * zone
+     */
+    public static final String SHANGHAI_ZONE = "Asia/Shanghai";
 }

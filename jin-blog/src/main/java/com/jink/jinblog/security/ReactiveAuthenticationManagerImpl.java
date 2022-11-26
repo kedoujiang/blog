@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
  * @date 2022/11/19 16:13:12
  */
 @Component
-public class AuthenticationManager implements ReactiveAuthenticationManager {
+public class ReactiveAuthenticationManagerImpl implements ReactiveAuthenticationManager {
 
     private JWTUtil jwtUtil;
 
-    public AuthenticationManager(JWTUtil jwtUtil){
+    public ReactiveAuthenticationManagerImpl(JWTUtil jwtUtil){
         this.jwtUtil = jwtUtil;
     }
 

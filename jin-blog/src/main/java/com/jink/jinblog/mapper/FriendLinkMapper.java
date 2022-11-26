@@ -1,6 +1,7 @@
 package com.jink.jinblog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.jink.jinblog.entity.FriendLink;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,5 +12,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2022/11/26 15:59:26
  */
 @Mapper
-public interface FriendLinkMapper extends BaseMapper<FriendLinkMapper> {
+public interface FriendLinkMapper extends BaseMapper<FriendLink> {
 }

@@ -11,4 +11,5 @@ import com.jink.jinblog.entity.UserInfo;
  * @date 2022/11/20 20:09:31
  */
 public interface UserInfoService extends IService<UserInfo> {
+
 }

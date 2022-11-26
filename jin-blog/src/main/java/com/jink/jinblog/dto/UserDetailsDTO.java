@@ -23,7 +23,7 @@ import static com.jink.jinblog.constant.CommonConst.FALSE;
  */
 @Data
 @Builder
-public class UserDTO implements UserDetails {
+public class UserDetailsDTO implements UserDetails {
 
     /**
      * 用户账号id

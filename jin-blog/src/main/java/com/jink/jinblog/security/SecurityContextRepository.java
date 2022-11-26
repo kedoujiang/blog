@@ -14,21 +14,21 @@ import reactor.core.publisher.Mono;
  * @author JINK
  * @version 1.0
  * @project jin-blog
- * @description
+ * @description 上下文验证器
  * @date 2022/11/19 16:17:51
  */
 @Component
 public class SecurityContextRepository implements ServerSecurityContextRepository {
 
-    private AuthenticationManager authenticationManager;
+    private ReactiveAuthenticationManagerImpl authenticationManager;
 
-    public SecurityContextRepository(AuthenticationManager authenticationManager) {
+    public SecurityContextRepository(ReactiveAuthenticationManagerImpl authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
     @Override
     public Mono<Void> save(ServerWebExchange exchange, SecurityContext context) {
-        return null;
+        return Mono.empty();
     }
 
     @Override

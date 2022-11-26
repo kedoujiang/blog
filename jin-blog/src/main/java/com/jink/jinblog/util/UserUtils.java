@@ -1,6 +1,6 @@
 package com.jink.jinblog.util;
 
-import com.jink.jinblog.dto.UserDTO;
+import com.jink.jinblog.dto.UserDetailsDTO;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class UserUtils {
      *
      * @return 用户登录信息
      */
-    public static UserDTO getLoginUser() {
-        return (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public static UserDetailsDTO getLoginUser() {
+        return (UserDetailsDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
