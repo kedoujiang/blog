@@ -62,6 +62,10 @@ public class R<T> implements Serializable {
         return restResult(null, ResponseEnum.FAIL.code, ResponseEnum.FAIL.message);
     }
 
+    public static <T> R<T> of(int code ,String msg){
+        return restResult(null,code,msg);
+    }
+
     public static <T> R<T> of(ResponseEnum responseEnum){
         return restResult(null,responseEnum.code,responseEnum.message);
     }

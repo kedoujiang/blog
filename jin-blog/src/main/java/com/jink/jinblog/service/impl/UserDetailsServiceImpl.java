@@ -10,7 +10,7 @@ import com.jink.jinblog.exception.BizException;
 import com.jink.jinblog.mapper.RoleMapper;
 import com.jink.jinblog.mapper.UserAuthMapper;
 import com.jink.jinblog.mapper.UserInfoMapper;
-import com.jink.jinblog.service.ReactiveHttpContextHolder;
+import com.jink.jinblog.handler.ReactiveHttpContextHolder;
 import com.jink.jinblog.service.RedisService;
 import com.jink.jinblog.util.IpUtils;
 import eu.bitwalker.useragentutils.UserAgent;

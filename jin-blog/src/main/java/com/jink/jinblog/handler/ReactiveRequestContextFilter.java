@@ -1,4 +1,4 @@
-package com.jink.jinblog.service;
+package com.jink.jinblog.handler;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
