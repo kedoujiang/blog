@@ -1,5 +1,6 @@
 package com.jink.jinblog.security;
 
+import com.jink.jinblog.dto.UserDetailsDTO;
 import com.jink.jinblog.util.JWTUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
@@ -32,7 +33,8 @@ public class ReactiveAuthenticationManagerImpl implements ReactiveAuthentication
     @SuppressWarnings("unchecked")
     public Mono<Authentication> authenticate(Authentication authentication) {
         String authToken = authentication.getCredentials().toString();
-        String username = jwtUtil.getUsernameFromToken(authToken);
+        UserDetailsDTO userDetailsDTO = (UserDetailsDTO) authentication.getPrincipal();
+        String credentials = (String) authentication.getCredentials();
         return Mono.just(jwtUtil.validateToken(authToken))
                 .filter(valid -> valid)
                 .switchIfEmpty(Mono.empty())
@@ -40,8 +42,8 @@ public class ReactiveAuthenticationManagerImpl implements ReactiveAuthentication
                     Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
                     List<String> rolesMap = claims.get("role", List.class);
                     return new UsernamePasswordAuthenticationToken(
-                            username,
-                            null,
+                            userDetailsDTO,
+                            credentials,
                             rolesMap.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
                     );
                 });

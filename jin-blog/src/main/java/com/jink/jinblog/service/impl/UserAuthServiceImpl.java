@@ -44,7 +44,8 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
     @Autowired
     private RedisService redisService;
 
-    @Override
+
+
     public Mono<UserDetailsDTO> findByUsername(String username, ServerHttpRequest request) {
         if (StringUtils.isBlank(username)) {
             throw new BizException("用户名不能为空！");
@@ -58,6 +59,21 @@ public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> i
         }
         UserDetailsDTO userDetailsDTO = convertUserDetail(userAuth, request);
         return Mono.justOrEmpty(userDetailsDTO);
+    }
+
+    @Override
+    public UserDetailsDTO loginByUserName(String username, ServerHttpRequest request){
+        if (StringUtils.isBlank(username)) {
+            throw new BizException("用户名不能为空！");
+        }
+        // 查询账号是否存在
+        UserAuth userAuth = baseMapper.selectOne(new LambdaQueryWrapper<UserAuth>()
+                .select(UserAuth::getId, UserAuth::getUserInfoId, UserAuth::getUsername, UserAuth::getPassword, UserAuth::getLoginType)
+                .eq(UserAuth::getUsername, username));
+        if (Objects.isNull(userAuth)) {
+            throw new BizException("用户名不存在!");
+        }
+        return convertUserDetail(userAuth, request);
     }
 
     /**

@@ -16,5 +16,7 @@ import reactor.core.publisher.Mono;
 
 public interface UserAuthService extends IService<UserAuth> {
 
-    public Mono<UserDetailsDTO> findByUsername(String username, ServerHttpRequest request);
+    Mono<UserDetailsDTO> findByUsername(String username, ServerHttpRequest request);
+
+    UserDetailsDTO loginByUserName(String username, ServerHttpRequest request);
 }

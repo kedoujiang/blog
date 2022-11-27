@@ -36,16 +36,16 @@ public class CommonController {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @PostMapping("/login")
-    @Operation(summary = "登录接口")
-    public Mono<ResponseEntity<AuthResponse>> login(@RequestBody AuthRequest ar, ServerHttpRequest request) {
-        return userAuthService.findByUsername(ar.getUsername(), request)
-                .filter(userDetails -> passwordEncoder.encode(ar.getPassword()).equals(userDetails.getPassword()))
-                .map(userDetails -> ResponseEntity.ok(
-                        AuthResponse.
-                                builder()
-                                .token(jwtUtil.generateToken(userDetails))
-                                .build()))
-                .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()));
-    }
+//    @PostMapping("/login")
+//    @Operation(summary = "登录接口")
+//    public Mono<ResponseEntity<AuthResponse>> login(@RequestBody AuthRequest ar, ServerHttpRequest request) {
+//        return userAuthService.findByUsername(ar.getUsername(), request)
+//                .filter(userDetails -> passwordEncoder.encode(ar.getPassword()).equals(userDetails.getPassword()))
+//                .map(userDetails -> ResponseEntity.ok(
+//                        AuthResponse.
+//                                builder()
+//                                .token(jwtUtil.generateToken(userDetails))
+//                                .build()))
+//                .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()));
+//    }
 }

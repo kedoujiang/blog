@@ -3,8 +3,6 @@ package com.jink.jinblog.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.DelegatingReactiveAuthenticationManager;
-import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
@@ -12,10 +10,6 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author JINK
@@ -53,6 +47,9 @@ public class WebFluxSecurityConfigurer {
     @Autowired
     private ReactiveAuthorizationManagerImpl reactiveAuthorizationManager;
 
+    @Autowired
+    private ServerFormLoginAuthenticationConverterImpl serverFormLoginAuthenticationConverter;
+
 
     @Bean
     public SecurityWebFilterChain  securityWebFilterChain(ServerHttpSecurity http) {
@@ -62,7 +59,6 @@ public class WebFluxSecurityConfigurer {
                 .formLogin().disable()
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange(exchange -> {
-
                     exchange.pathMatchers("/login","/swagger-ui.html",
                                     "/webjars/**",
                                     "/swagger-resources/**",
@@ -88,6 +84,7 @@ public class WebFluxSecurityConfigurer {
         filter.setSecurityContextRepository(securityContextRepository);
         filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         filter.setAuthenticationFailureHandler(authenticationFailureHandler);
+        filter.setServerAuthenticationConverter(serverFormLoginAuthenticationConverter);
         filter.setRequiresAuthenticationMatcher(
                 ServerWebExchangeMatchers.pathMatchers(HttpMethod.POST, "/login")
         );
