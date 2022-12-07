@@ -1,7 +1,7 @@
 package com.jink.jinblog.security;
 
-import com.jink.jinblog.dto.UserDetailsDTO;
-import com.jink.jinblog.util.JWTUtil;
+import com.jink.jinblog.dto.UserInfoDTO;
+import com.jink.jinblog.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,9 +24,10 @@ import java.util.stream.Collectors;
 @Component
 public class ReactiveAuthenticationManagerImpl implements ReactiveAuthenticationManager {
 
-    private JWTUtil jwtUtil;
+    @Resource
+    private JwtUtil jwtUtil;
 
-    public ReactiveAuthenticationManagerImpl(JWTUtil jwtUtil){
+    public ReactiveAuthenticationManagerImpl(JwtUtil jwtUtil){
         this.jwtUtil = jwtUtil;
     }
 
@@ -33,8 +35,7 @@ public class ReactiveAuthenticationManagerImpl implements ReactiveAuthentication
     @SuppressWarnings("unchecked")
     public Mono<Authentication> authenticate(Authentication authentication) {
         String authToken = authentication.getCredentials().toString();
-        UserDetailsDTO userDetailsDTO = (UserDetailsDTO) authentication.getPrincipal();
-        String credentials = (String) authentication.getCredentials();
+        UserInfoDTO userInfoDTO = (UserInfoDTO) authentication.getPrincipal();
         return Mono.just(jwtUtil.validateToken(authToken))
                 .filter(valid -> valid)
                 .switchIfEmpty(Mono.empty())
@@ -42,8 +43,8 @@ public class ReactiveAuthenticationManagerImpl implements ReactiveAuthentication
                     Claims claims = jwtUtil.getAllClaimsFromToken(authToken);
                     List<String> rolesMap = claims.get("role", List.class);
                     return new UsernamePasswordAuthenticationToken(
-                            userDetailsDTO,
-                            credentials,
+                            userInfoDTO,
+                            authToken,
                             rolesMap.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
                     );
                 });

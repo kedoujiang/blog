@@ -1,7 +1,7 @@
 package com.jink.jinblog.security;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.jink.jinblog.result.R;
+import com.jink.jinblog.result.Result;
 import com.jink.jinblog.result.ResponseEnum;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -31,7 +31,7 @@ public class ServerAuthenticationEntryPointImpl implements ServerAuthenticationE
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
                     response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
                     DataBufferFactory dataBufferFactory = response.bufferFactory();
-                    String result = JSONObject.toJSONString(R.fail(ResponseEnum.PERMISSION_DENIED));
+                    String result = JSONObject.toJSONString(Result.fail(ResponseEnum.PERMISSION_DENIED));
                     DataBuffer buffer = dataBufferFactory.wrap(result.getBytes(
                             Charset.defaultCharset()));
                     return response.writeWith(Mono.just(buffer));

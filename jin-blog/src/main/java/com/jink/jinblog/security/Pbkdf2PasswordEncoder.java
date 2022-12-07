@@ -17,7 +17,7 @@ import java.util.Base64;
  * @date 2022/11/19 16:23:06
  */
 @Component
-public class PBKDF2PasswordEncoder implements PasswordEncoder {
+public class Pbkdf2PasswordEncoder implements PasswordEncoder {
 
     private static final String secret = "jink6688";
 

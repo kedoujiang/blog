@@ -16,7 +16,12 @@ import reactor.core.publisher.Mono;
 
 public interface UserAuthService extends IService<UserAuth> {
 
-    Mono<UserDetailsDTO> findByUsername(String username, ServerHttpRequest request);
 
+    /**
+     * 登录处理
+     * @param username
+     * @param request
+     * @return
+     */
     UserDetailsDTO loginByUserName(String username, ServerHttpRequest request);
 }

@@ -1,7 +1,10 @@
 package com.jink.jinblog.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +26,12 @@ import static com.jink.jinblog.constant.CommonConst.FALSE;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDetailsDTO implements UserDetails {
 
+
+    private static final long serialVersionUID = -4840359112832667208L;
     /**
      * 用户账号id
      */

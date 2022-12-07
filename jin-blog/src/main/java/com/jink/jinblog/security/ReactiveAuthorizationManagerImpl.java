@@ -1,27 +1,20 @@
 package com.jink.jinblog.security;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.github.houbb.heaven.util.util.CollectionUtil;
 import com.jink.jinblog.mapper.RoleMapper;
-import com.jink.jinblog.result.R;
+import com.jink.jinblog.result.Result;
 import com.jink.jinblog.result.ResponseEnum;
-import com.jink.jinblog.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author JINK
@@ -65,7 +58,7 @@ public class ReactiveAuthorizationManagerImpl implements ReactiveAuthorizationMa
         return check(authentication, object)
                 .filter(AuthorizationDecision::isGranted)
                 .switchIfEmpty(Mono.defer(() -> {
-                    String body = JSONObject.toJSONString(R.fail(ResponseEnum.PERMISSION_DENIED));
+                    String body = JSONObject.toJSONString(Result.fail(ResponseEnum.PERMISSION_DENIED));
                     return Mono.error(new AccessDeniedException(body));
                 }))
                 .flatMap(d -> Mono.empty());

@@ -20,7 +20,7 @@ import java.util.Map;
  * @date 2022/11/19 16:08:01
  */
 @Component
-public class JWTUtil {
+public class JwtUtil {
 
     private static  final  String secret = "ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength";
 
@@ -52,13 +52,14 @@ public class JWTUtil {
     }
 
     public String generateToken(UserDetailsDTO user) {
-        Map<String, Object> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>(1);
         claims.put("role", user.getRoleList());
         return doGenerateToken(claims, user.getUsername());
     }
 
     private String doGenerateToken(Map<String, Object> claims, String username) {
-        Long expirationTimeLong = Long.parseLong(expirationTime); //in second
+        //in second
+        Long expirationTimeLong = Long.parseLong(expirationTime);
         final Date createdDate = new Date();
         final Date expirationDate = new Date(createdDate.getTime() + expirationTimeLong * 1000);
 

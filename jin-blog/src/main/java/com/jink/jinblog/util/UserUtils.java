@@ -1,8 +1,12 @@
 package com.jink.jinblog.util;
 
 import com.jink.jinblog.dto.UserDetailsDTO;
-import org.springframework.security.core.context.SecurityContextHolder;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 /**
  * @author JINK
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Component;
  * @date 2022/11/24 21:37:00
  */
 @Component
+@Log4j2
 public class UserUtils {
 
     /**
@@ -19,7 +24,16 @@ public class UserUtils {
      *
      * @return 用户登录信息
      */
-    public static UserDetailsDTO getLoginUser() {
-        return (UserDetailsDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public static Mono<UserDetailsDTO> getLoginUser() {
+
+        return ReactiveSecurityContextHolder.getContext()
+                .switchIfEmpty(Mono.error(new IllegalStateException("ReactiveSecurityContext is empty")))
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::getPrincipal)
+                .cast(UserDetailsDTO.class);
+    }
+
+    private static Mono<SecurityContext> getSecurityContext() {
+        return ReactiveSecurityContextHolder.getContext();
     }
 }

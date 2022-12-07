@@ -88,4 +88,9 @@ public class RedisPrefixConst {
      * 访客
      */
     public static final String UNIQUE_VISITOR = "unique_visitor";
+
+    /**
+     * UserInfo
+     */
+    public static final String USER_INFO = "user_info:";
 }

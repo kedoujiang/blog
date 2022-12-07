@@ -1,6 +1,6 @@
 package com.jink.jinblog.test;
 
-import com.jink.jinblog.security.PBKDF2PasswordEncoder;
+import com.jink.jinblog.security.Pbkdf2PasswordEncoder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +20,7 @@ import java.util.Base64;
 public class UnitTest {
 
     @Autowired
-    private PBKDF2PasswordEncoder passwordEncoder;
+    private Pbkdf2PasswordEncoder passwordEncoder;
 
     @Test
     public void test() throws NoSuchAlgorithmException, InvalidKeySpecException {

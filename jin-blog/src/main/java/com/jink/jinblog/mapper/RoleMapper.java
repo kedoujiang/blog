@@ -25,7 +25,7 @@ public interface RoleMapper extends BaseMapper<Role> {
     List<String> listRolesByUserInfoId(Integer userInfoId);
 
     /**
-     *
+     *  列出所以角色标签
      * @return 角色标签
      */
     List<String> listRolesLabel();

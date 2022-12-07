@@ -1,7 +1,7 @@
 package com.jink.jinblog.security;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.jink.jinblog.result.R;
+import com.jink.jinblog.result.Result;
 import com.jink.jinblog.result.ResponseEnum;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -29,30 +29,29 @@ public class ServerAuthenticationFailureHandlerImpl implements ServerAuthenticat
         return Mono.defer(() -> Mono.just(webFilterExchange.getExchange().getResponse()).flatMap(response -> {
 
             DataBufferFactory dataBufferFactory = response.bufferFactory();
-            R<Object> result = R.fail(ResponseEnum.GATEWAY_SYS_ERROR);
+            Result<Object> result = Result.of(ResponseEnum.LOGIN_PASSWORD_ERROR);
 
             // 账号不存在
             if (exception instanceof UsernameNotFoundException) {
-                result = R.fail(ResponseEnum.ACCOUNT_NOT_EXIST);
+                result = Result.of(ResponseEnum.ACCOUNT_NOT_EXIST);
                 // 用户名或密码错误
             } else if (exception instanceof BadCredentialsException) {
-                result = R.fail(ResponseEnum.LOGIN_PASSWORD_ERROR);
+                result = Result.of(ResponseEnum.LOGIN_PASSWORD_ERROR);
                 // 账号已过期
             } else if (exception instanceof AccountExpiredException) {
-                result = R.fail(ResponseEnum.ACCOUNT_EXPIRED);
+                result = Result.of(ResponseEnum.ACCOUNT_EXPIRED);
                 // 账号已被锁定
             } else if (exception instanceof LockedException) {
-                result = R.fail(ResponseEnum.ACCOUNT_LOCKED);
+                result = Result.of(ResponseEnum.ACCOUNT_LOCKED);
                 // 用户凭证已失效
             } else if (exception instanceof CredentialsExpiredException) {
-                result = R.fail(ResponseEnum.ACCOUNT_CREDENTIAL_EXPIRED);
+                result = Result.of(ResponseEnum.ACCOUNT_CREDENTIAL_EXPIRED);
                 // 账号已被禁用
             } else if (exception instanceof DisabledException) {
-                result = R.fail(ResponseEnum.ACCOUNT_DISABLE);
+                result = Result.of(ResponseEnum.ACCOUNT_DISABLE);
             } else if (exception instanceof AuthenticationServiceException) {
                 result.setMsg(exception.getMessage());
             }
-
             DataBuffer dataBuffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes());
             response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             return response.writeWith(Mono.just(dataBuffer));

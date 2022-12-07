@@ -1,7 +1,7 @@
 package com.jink.jinblog.security;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.jink.jinblog.result.R;
+import com.jink.jinblog.result.Result;
 import com.jink.jinblog.result.ResponseEnum;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -30,10 +29,10 @@ public class ServerAccessDeniedHandlerImpl implements ServerAccessDeniedHandler 
         return Mono
                 .defer(() -> Mono.just(exchange.getResponse()))
                 .flatMap(response -> {
-                    response.setStatusCode(HttpStatus.OK);
+                    response.setStatusCode(HttpStatus.FORBIDDEN);
                     response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
                     DataBufferFactory dataBufferFactory = response.bufferFactory();
-                    String result = JSONObject.toJSONString(R.fail(ResponseEnum.PERMISSION_DENIED));
+                    String result = JSONObject.toJSONString(Result.fail(ResponseEnum.PERMISSION_DENIED));
                     DataBuffer buffer = dataBufferFactory.wrap(result.getBytes(
                             StandardCharsets.UTF_8));
                     return response.writeWith(Mono.just(buffer));

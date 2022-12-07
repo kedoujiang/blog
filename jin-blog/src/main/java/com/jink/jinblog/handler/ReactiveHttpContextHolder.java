@@ -14,13 +14,19 @@ import reactor.core.publisher.Mono;
  */
 public class ReactiveHttpContextHolder {
 
-    //获取当前请求对象
+    /**
+     * 获取当前请求对象
+     * @return
+     */
     public static Mono<ServerHttpRequest> getRequest() {
         return Mono.subscriberContext()
                 .map(context -> context.get(Info.CONTEXT_KEY).getRequest());
     }
 
-    //获取当前response
+    /**
+     * 获取当前response
+     * @return
+     */
     public static Mono<ServerHttpResponse> getResponse(){
         return Mono.subscriberContext()
                 .map(context -> context.get(Info.CONTEXT_KEY).getResponse());
