@@ -27,7 +27,6 @@ public class ServerAuthenticationFailureHandlerImpl implements ServerAuthenticat
     @Override
     public Mono<Void> onAuthenticationFailure(WebFilterExchange webFilterExchange, AuthenticationException exception) {
         return Mono.defer(() -> Mono.just(webFilterExchange.getExchange().getResponse()).flatMap(response -> {
-
             DataBufferFactory dataBufferFactory = response.bufferFactory();
             Result<Object> result = Result.of(ResponseEnum.LOGIN_PASSWORD_ERROR);
 

@@ -1,6 +1,7 @@
 package com.jink.jinblog.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.jink.jinblog.constant.CommonConst;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

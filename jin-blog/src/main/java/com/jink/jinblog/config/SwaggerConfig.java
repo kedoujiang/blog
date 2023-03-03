@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI OpenAPI() {
+    public OpenAPI openAPI() {
         return new OpenAPI()
                 .components(new Components()
 //                        .addSecuritySchemes("BasicAuth", new SecurityScheme()

@@ -32,7 +32,7 @@ public class ServerAccessDeniedHandlerImpl implements ServerAccessDeniedHandler 
                     response.setStatusCode(HttpStatus.FORBIDDEN);
                     response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
                     DataBufferFactory dataBufferFactory = response.bufferFactory();
-                    String result = JSONObject.toJSONString(Result.fail(ResponseEnum.PERMISSION_DENIED));
+                    String result = JSONObject.toJSONString(Result.of(ResponseEnum.PERMISSION_DENIED));
                     DataBuffer buffer = dataBufferFactory.wrap(result.getBytes(
                             StandardCharsets.UTF_8));
                     return response.writeWith(Mono.just(buffer));

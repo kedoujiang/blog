@@ -31,7 +31,7 @@ public class ServerAuthenticationEntryPointImpl implements ServerAuthenticationE
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
                     response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
                     DataBufferFactory dataBufferFactory = response.bufferFactory();
-                    String result = JSONObject.toJSONString(Result.fail(ResponseEnum.PERMISSION_DENIED));
+                    String result = JSONObject.toJSONString(Result.of(ResponseEnum.PERMISSION_DENIED));
                     DataBuffer buffer = dataBufferFactory.wrap(result.getBytes(
                             Charset.defaultCharset()));
                     return response.writeWith(Mono.just(buffer));
