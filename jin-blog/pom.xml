@@ -19,6 +19,8 @@
         <java.version>11</java.version>
         <io.jsonwebtoken.version>0.11.2</io.jsonwebtoken.version>
         <swagger.version>3.0.0</swagger.version>
+        <oss.version>3.8.0</oss.version>
+        <cos.version>5.6.75</cos.version>
     </properties>
 
     <dependencies>
@@ -34,7 +36,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -45,6 +50,20 @@
             <artifactId>jjwt-impl</artifactId>
             <version>${io.jsonwebtoken.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${oss.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>${cos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

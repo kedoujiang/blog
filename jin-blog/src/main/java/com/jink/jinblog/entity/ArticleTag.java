@@ -2,6 +2,8 @@ package com.jink.jinblog.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  * @author JINK
@@ -10,6 +12,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
  * @description 文章标签
  * @date 2022/11/26 15:38:26
  */
+@Data
+@Builder
 public class ArticleTag {
 
     /**
